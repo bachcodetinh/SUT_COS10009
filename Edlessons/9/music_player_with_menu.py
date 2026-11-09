@@ -6,14 +6,14 @@ import input_functions as in_fnc
 # ------------------------------
 # Dictionaries
 # ------------------------------
-MENU = {
+MAIN_MENU = {
     1 : 'Read in Albums',
     2 : 'Display Albums',
     3 : 'Select an Album to play',
     4 : 'Exit the application'
 }
 
-MENU_2 = {
+MENU_Opt2 = {
     1 : 'Display all albums',
     2 : 'Display all albums for a particular genre'
 }
@@ -86,9 +86,24 @@ def print_album(album):
     print(f"{GENRE[album.genre]}")
     print_tracks(album.tracks)
 
+# --- Menu Selecting ---
+def main_menu():
+    i = 1
+    print('----------------------')
+    print('Music Player With Menu')
+    print('----------------------')
+    while i != (count := len(MAIN_MENU)):
+        print(f'{i}.',MAIN_MENU[i])
+        i += 1
+
+    opt = in_fnc.read_integer('--***--\nPlease select an option from 1-4: ')
+    print(f'You have chosen option {opt} -',MAIN_MENU[opt])
+
+    return opt
+    
 # --- Main Function ---
 def main():
-
+    main_menu()
 
 # ------------------------------
 # Running the main function
