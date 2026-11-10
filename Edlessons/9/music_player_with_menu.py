@@ -68,9 +68,8 @@ def print_track(track):
     print(f"Track file location is: {track.location}")
 
 def print_tracks(tracks):
-    count = len(tracks)
     i = 0
-    while i != count:
+    while i != len(tracks):
         print_track(tracks[i])
         i += 1
 
@@ -85,20 +84,20 @@ def read_albums(albums_file, albums):
 
 def read_album(album):
     artist = album.readline().strip()
-    
     title = album.readline().strip()
-    
     date = album.readline().strip()
-    
     genre= int(album.readline().strip())
-    # print(title)
-    # print(artist)
-    # print(date)
-    # print(genre)
     tracks = read_tracks(album)
     return Album(title, artist, date, genre, tracks)
 
 # --- Albums Printing ---
+def print_albums(albums):
+    i = 0
+    while i != len(albums):
+        print('ALbum', i + 1)
+        print_album(albums[i])
+        i += 1
+
 def print_album(album):
     print(f"Album title is {album.title}")
     print(f"Album artist is {album.artist}")
@@ -114,12 +113,12 @@ def print_album(album):
 def main_menu():
     print('----------------------')
     print('Music Player With Menu')
-    print('----------------------')
+    print('----------------------\n')
     i = 1
     while i <= (count := len(MAIN_MENU)):
         print(f'{i}.',MAIN_MENU[i])
         i += 1
-    opt = in_fnc.read_integer('--***--\nPlease select an option from 1-4: ')
+    opt = in_fnc.read_integer('\n--***--\nPlease select an option from 1-4: ')
 
     return opt
 
@@ -127,7 +126,7 @@ def main_menu():
 def select_menu(opt, albums):
     match opt:
         case 1:  
-            print(f'You have chosen option {opt} -',MAIN_MENU[opt])
+            print_option(opt,MAIN_MENU)
             name = in_fnc.read_string("Please enter the album's file name: ")
             with open(name, 'r') as outfile_album:
                 read_albums(outfile_album, albums)
@@ -137,7 +136,19 @@ def select_menu(opt, albums):
                 print('You have not Read in any Album.\nPlease choose Option 1 to Read in an album!')
                 return True
             else:
-                menu_opt_2(albums)
+                run = True
+                while run == True:
+                    i = 1
+                    while i <= (count := len(MENU_Opt2)):
+                        print(f'{i}.',MENU_Opt2[i])
+                        i += 1
+                    opt = in_fnc.read_integer('\n--***--\nPlease select an option from 1-2: ')
+                    if opt < 1 and opt > 2:
+                        print(f'You have chosen option {opt}.\nYour option does not exist.\nPlease choose again!')
+                        run = True
+                    else:
+                        menu_opt_2(opt,albums)
+                        run = False
             return True
         case 3:
             menu_opt_3(opt)
@@ -147,16 +158,16 @@ def select_menu(opt, albums):
             return False
         case _:
             print(f'You have chosen option {opt}.\nYour option does not exist.\nPlease choose again!')
-            return True
-    
-# --- Menu Option 1 ---
-# def menu_opt_1():
-    
+            return True    
     
 # --- Menu Option 2 ---
-def menu_opt_2(albums):
-    pass
-        
+def menu_opt_2(opt,albums):
+    print_option(opt,MENU_Opt2)
+    match opt:
+        case 1:
+            print_albums(albums)
+        case 2:
+            print_albums(albums)
 
 # --- Menu Option 3 ---
 def menu_opt_3(opt):
@@ -178,7 +189,12 @@ def main():
         opt = main_menu()
         run = select_menu(opt, albums)
 
-        
+# ------------------------------
+# Utilities
+# ------------------------------      
+# --- Print Option ---
+def print_option(opt,opt_name):
+    print(f'\nYou have chosen option {opt} -',{opt_name[opt]},'\n')
 # ------------------------------
 # Running the main function
 # ------------------------------
