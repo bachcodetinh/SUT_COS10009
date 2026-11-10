@@ -32,7 +32,7 @@ class Album():
     def __init__(self, title, artist, date, genre, tracks):
         self.title = title
         self.artist = artist
-        self.year = date
+        self.date = date
         self.genre = genre
         self.tracks = tracks
 
@@ -75,15 +75,13 @@ def print_tracks(tracks):
         i += 1
 
 # --- Albums Reading ---
-def read_albums(albums_file):
-    albums = []
+def read_albums(albums_file, albums):
     count = int(albums_file.readline().strip())
     i = 0
     while i < count:
         album = read_album(albums_file)
         albums.append(album)
         i += 1
-    return albums
 
 def read_album(album):
     artist = album.readline().strip()
@@ -126,16 +124,20 @@ def main_menu():
     return opt
 
 # --- Menu Selecting ---
-def select_menu(opt):
+def select_menu(opt, albums):
     match opt:
         case 1:  
             print(f'You have chosen option {opt} -',MAIN_MENU[opt])
             name = in_fnc.read_string("Please enter the album's file name: ")
             with open(name, 'r') as outfile_album:
-                albums = read_albums(outfile_album)
-            return True, albums
+                read_albums(outfile_album, albums)
+            return True
         case 2:
-            menu_opt_2(opt)
+            if not albums:
+                print('You have not Read in any Album.\nPlease choose Option 1 to Read in an album!')
+                return True
+            else:
+                menu_opt_2(albums)
             return True
         case 3:
             menu_opt_3(opt)
@@ -152,8 +154,9 @@ def select_menu(opt):
     
     
 # --- Menu Option 2 ---
-def menu_opt_2(opt):
-    print(f'You have chosen option {opt} -',MAIN_MENU[opt])
+def menu_opt_2(albums):
+    pass
+        
 
 # --- Menu Option 3 ---
 def menu_opt_3(opt):
@@ -170,10 +173,11 @@ def menu_opt_4(opt):
 # --- Main Function ---
 def main():
     run = True
+    albums = []
     while run == True:
         opt = main_menu()
-        run, album = select_menu(opt)
-        print(album)
+        run = select_menu(opt, albums)
+
         
 # ------------------------------
 # Running the main function
