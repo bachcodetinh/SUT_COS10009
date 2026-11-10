@@ -100,7 +100,14 @@ def print_all_albums_title(albums):
     print()
 
 def print_genre_albums(genre, albums):
-    pass
+    i = 0
+    print()
+    while i != len(albums):
+        if albums[i].genre == genre:
+            print('Album number', i + 1,'-',albums[i].title)
+        i += 1
+
+    print()
 
 def print_album(album):
     print(f"Album title is {album.title}")
@@ -146,16 +153,20 @@ def select_menu(opt, albums):
                         print(f'{i}.',MENU_Opt2[i])
                         i += 1
                     opt = in_fnc.read_integer('\n--***--\nPlease select an option from 1-2: ')
-                    if opt < 1 and opt > 2:
+                    if opt < 1 or opt > 2:
                         print(f'You have chosen option {opt}.\nYour option does not exist.\nPlease choose again!')
                         run = True
                     else:
                         menu_opt_2(opt,albums)
                         run = False
+                        return True
             return True
         case 3:
-            menu_opt_3(opt)
-            return True
+            if not albums:
+                print('You have not Read in any Album.\nPlease choose Option 1 to Read in an album!')
+                return True
+            else:
+                return True
         case 4:
             menu_opt_4(opt)
             return False
@@ -182,7 +193,7 @@ def genre_select():
             print(f'{i}.',GENRE[i])
             i += 1
         opt = in_fnc.read_integer('\n--***--\nPlease select genre from 1-4: ')
-        if opt < 1 and opt > 4:
+        if opt < 1 or opt > 4:
             print(f'You have chosen genre {opt}.\nYour genre does not exist.\nPlease choose again!')
             run = True
         else:
@@ -195,8 +206,7 @@ def menu_opt_3(opt):
 
 # --- Menu Option 4 ---
 def menu_opt_4(opt):
-    print(f'You have chosen option {opt} -',MAIN_MENU[opt])
-
+    print_option(opt,MAIN_MENU)
     print('-----------------------')
     print('Goodbye, See you again!')
     print('-----------------------')
