@@ -91,19 +91,22 @@ def read_album(album):
     return Album(title, artist, date, genre, tracks)
 
 # --- Albums Printing ---
-def print_albums(albums):
+def print_all_albums_title(albums):
     i = 0
+    print()
     while i != len(albums):
-        print('ALbum', i + 1)
-        print_album(albums[i])
+        print('ALbum', i + 1,albums[i].title)
         i += 1
+    print()
+
+def print_genre_albums(genre, albums):
+    pass
 
 def print_album(album):
     print(f"Album title is {album.title}")
     print(f"Album artist is {album.artist}")
     print(f"The album release date is {album.date}")
-    print(f"Genre is {album.genre}")
-    print(f"{GENRE[album.genre]}")
+    print(f"Genre is {album.genre} - {GENRE[album.genre]}")
     print_tracks(album.tracks)
 
 # ------------------------------
@@ -112,7 +115,7 @@ def print_album(album):
 # --- Main Menu ---
 def main_menu():
     print('----------------------')
-    print('Music Player With Menu')
+    print('Music Player Main Menu')
     print('----------------------\n')
     i = 1
     while i <= (count := len(MAIN_MENU)):
@@ -165,10 +168,27 @@ def menu_opt_2(opt,albums):
     print_option(opt,MENU_Opt2)
     match opt:
         case 1:
-            print_albums(albums)
+            print_all_albums_title(albums)
         case 2:
-            print_albums(albums)
+            genre = genre_select()
+            print_genre_albums(genre,albums)
 
+# --- Genre Menu Selecting ---
+def genre_select():
+    run = True
+    while run == True:
+        i = 1
+        while i <= (count := len(GENRE)):
+            print(f'{i}.',GENRE[i])
+            i += 1
+        opt = in_fnc.read_integer('\n--***--\nPlease select genre from 1-4: ')
+        if opt < 1 and opt > 4:
+            print(f'You have chosen genre {opt}.\nYour genre does not exist.\nPlease choose again!')
+            run = True
+        else:
+            print_option(opt,GENRE)
+            run = False
+    return opt
 # --- Menu Option 3 ---
 def menu_opt_3(opt):
     print(f'You have chosen option {opt} -',MAIN_MENU[opt])
