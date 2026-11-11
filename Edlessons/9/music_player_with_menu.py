@@ -75,14 +75,18 @@ def print_tracks(tracks):
         print_track(tracks[i])
         i += 1
 
-def print_number_track(track_key, tracks):
+def print_number_track(track_key, tracks, album):
     i = 0
     print()
     while i != len(tracks):
         if (i+1) == track_key:
-            print_track(tracks[i])
+            play_track(tracks[i], album)
         i += 1
     print()
+    
+
+def play_track(track,album):
+    print(f"Playing track {track.name} from album {album.title}")
     time.sleep(3)
 
 # --- Albums Reading ---
@@ -216,7 +220,7 @@ def menu_opt_3(album_key,albums):
         i += 1
     print()   
     track_key = in_fnc.read_integer('Please enter the track number: ')
-    print_number_track(track_key,albums[album_key-1].tracks)
+    print_number_track(track_key,albums[album_key-1].tracks,albums[album_key-1])
 
 # --- Menu Option 4 ---
 def menu_opt_4(opt):
