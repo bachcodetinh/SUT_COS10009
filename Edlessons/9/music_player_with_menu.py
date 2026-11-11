@@ -2,6 +2,7 @@
 # Import Modules
 # ------------------------------
 import input_functions as in_fnc
+import time
 
 # ------------------------------
 # Dictionaries
@@ -70,8 +71,19 @@ def print_track(track):
 def print_tracks(tracks):
     i = 0
     while i != len(tracks):
+        print('\nTrack number',i+1)
         print_track(tracks[i])
         i += 1
+
+def print_number_track(track_key, tracks):
+    i = 0
+    print()
+    while i != len(tracks):
+        if (i+1) == track_key:
+            print_track(tracks[i])
+        i += 1
+    print()
+    time.sleep(3)
 
 # --- Albums Reading ---
 def read_albums(albums_file, albums):
@@ -95,7 +107,7 @@ def print_all_albums_title(albums):
     i = 0
     print()
     while i != len(albums):
-        print('ALbum', i + 1,albums[i].title)
+        print('ALbum key:', i + 1,' ',albums[i].title)
         i += 1
     print()
 
@@ -106,7 +118,6 @@ def print_genre_albums(genre, albums):
         if albums[i].genre == genre:
             print('Album number', i + 1,'-',albums[i].title)
         i += 1
-
     print()
 
 def print_album(album):
@@ -166,6 +177,15 @@ def select_menu(opt, albums):
                 print('You have not Read in any Album.\nPlease choose Option 1 to Read in an album!')
                 return True
             else:
+                run = True
+                while run == True:
+                    album_key = in_fnc.read_integer('Please enter the album number: ')
+                    if 1 <= album_key <= len(albums):
+                        menu_opt_3(album_key,albums)
+                        run = False
+                    else:
+                        print('Your album number does not exist.')
+                        run = True
                 return True
         case 4:
             menu_opt_4(opt)
@@ -184,6 +204,27 @@ def menu_opt_2(opt,albums):
             genre = genre_select()
             print_genre_albums(genre,albums)
 
+# --- Menu Option 3 ---
+def menu_opt_3(album_key,albums):
+    i = 0
+    print()
+    while i != len(albums):
+        if (i+1) == album_key:
+            print('Album is found: ')
+            print('Album number', i + 1,'-',albums[i].title)
+            print_tracks(albums[album_key-1].tracks)
+        i += 1
+    print()   
+    track_key = in_fnc.read_integer('Please enter the track number: ')
+    print_number_track(track_key,albums[album_key-1].tracks)
+
+# --- Menu Option 4 ---
+def menu_opt_4(opt):
+    print_option(opt,MAIN_MENU)
+    print('-----------------------')
+    print('Goodbye, See you again!')
+    print('-----------------------')
+
 # --- Genre Menu Selecting ---
 def genre_select():
     run = True
@@ -200,16 +241,13 @@ def genre_select():
             print_option(opt,GENRE)
             run = False
     return opt
-# --- Menu Option 3 ---
-def menu_opt_3(opt):
-    print(f'You have chosen option {opt} -',MAIN_MENU[opt])
 
-# --- Menu Option 4 ---
-def menu_opt_4(opt):
-    print_option(opt,MAIN_MENU)
-    print('-----------------------')
-    print('Goodbye, See you again!')
-    print('-----------------------')
+# ------------------------------
+# Utilities
+# ------------------------------      
+# --- Print Option ---
+def print_option(opt,opt_name):
+    print(f'\nYou have chosen option {opt} -',{opt_name[opt]},'\n')
 
 # --- Main Function ---
 def main():
@@ -218,13 +256,7 @@ def main():
     while run == True:
         opt = main_menu()
         run = select_menu(opt, albums)
-
-# ------------------------------
-# Utilities
-# ------------------------------      
-# --- Print Option ---
-def print_option(opt,opt_name):
-    print(f'\nYou have chosen option {opt} -',{opt_name[opt]},'\n')
+    
 # ------------------------------
 # Running the main function
 # ------------------------------
