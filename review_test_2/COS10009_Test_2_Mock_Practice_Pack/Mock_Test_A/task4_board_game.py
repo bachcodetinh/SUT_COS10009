@@ -7,3 +7,5 @@ CATEGORY = {
 
 
 # Define the BoardGame class here.
+class BoardGame:
+    pass
