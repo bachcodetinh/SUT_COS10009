@@ -1,16 +1,24 @@
-def read_array():
-    # Read and return the list.
-    pass
+def read_array(items):
+    num_items = int(input('How many items are you entering: '))
+    i = 0 
+    while i < num_items:
+        item = input('Enter item: ')
+        items.append(item)
+        i += 1
+    return items
 
 
 def print_array(a):
-    # Print the indexed list.
-    pass
+    print('Shopping list:')
+    i = 0
+    while i < len(a):
+        print(i, a[i])
+        i += 1
 
 
 def main():
-    # Call both functions.
-    pass
+    items = []
+    print_array(read_array(items))
 
 
 if __name__ == "__main__":
