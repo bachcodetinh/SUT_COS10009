@@ -7,3 +7,5 @@ ZONE = {
 
 
 # Define the Exhibit class here.
+class Exhibit:
+    pass
