@@ -31,6 +31,8 @@ pygame.draw.ellipse(screen, WHITE, (300, 250,80,100), 0)
 pygame.draw.circle(screen, BLACK, (350, 300),10)
 
 # Nose
+pygame.draw.line(screen, BLACK, (400, 350), (400, 500), 3)
+pygame.draw.arc(screen, BLACK, (325, 350, 150, 150), PI, PI/16, 3)
 pygame.draw.circle(screen, BLACK, (400, 350),32)
 pygame.draw.circle(screen, RED, (400, 350),30)
 
