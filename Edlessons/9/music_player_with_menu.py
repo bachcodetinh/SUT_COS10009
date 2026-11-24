@@ -11,7 +11,7 @@ MAIN_MENU = {
     1 : 'Read in Albums',
     2 : 'Display Albums',
     3 : 'Select an Album to play',
-    4 : 'Exit the application'
+    5 : 'Exit the application'
 }
 
 MENU_Opt2 = {
@@ -139,11 +139,14 @@ def main_menu():
     print('----------------------')
     print('Music Player Main Menu')
     print('----------------------\n')
-    i = 1
-    while i <= (count := len(MAIN_MENU)):
-        print(f'{i}.',MAIN_MENU[i])
+    i = 0
+    keys = list(MAIN_MENU.keys())
+    while i < (len(keys)):
+        current_key = keys[i]
+        current_value = MAIN_MENU[current_key]
+        print(f'{current_key}.',current_value)
         i += 1
-    opt = in_fnc.read_integer('\n--***--\nPlease select an option from 1-4: ')
+    opt = in_fnc.read_integer('\n--***--\nPlease select an option from 1-5: ')
 
     return opt
 
@@ -191,8 +194,8 @@ def select_menu(opt, albums):
                         print('Your album number does not exist.')
                         run = True
                 return True
-        case 4:
-            menu_opt_4(opt)
+        case 5:
+            menu_opt_5(opt)
             return False
         case _:
             print(f'You have chosen option {opt}.\nYour option does not exist.\nPlease choose again!')
@@ -214,16 +217,20 @@ def menu_opt_3(album_key,albums):
     print()
     while i != len(albums):
         if (i+1) == album_key:
-            print('Album is found: ')
-            print('Album number', i + 1,'-',albums[i].title)
-            print_tracks(albums[album_key-1].tracks)
+            if not albums[i].tracks:
+                print(f'Album {albums[i].title} is empty')
+                return
+            else:
+                print('Album is found: ')
+                print('Album number', i + 1,'-',albums[i].title)
+                print_tracks(albums[album_key-1].tracks)
         i += 1
     print()   
     track_key = in_fnc.read_integer('Please enter the track number: ')
     print_number_track(track_key,albums[album_key-1].tracks,albums[album_key-1])
 
 # --- Menu Option 4 ---
-def menu_opt_4(opt):
+def menu_opt_5(opt):
     print_option(opt,MAIN_MENU)
     print('-----------------------')
     print('Goodbye, See you again!')
@@ -237,7 +244,7 @@ def genre_select():
         while i <= (count := len(GENRE)):
             print(f'{i}.',GENRE[i])
             i += 1
-        opt = in_fnc.read_integer('\n--***--\nPlease select genre from 1-4: ')
+        opt = in_fnc.read_integer('\n--***--\nPlease select genre from 1-2-3-4: ')
         if opt < 1 or opt > 4:
             print(f'You have chosen genre {opt}.\nYour genre does not exist.\nPlease choose again!')
             run = True
