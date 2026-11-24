@@ -26,10 +26,12 @@ running = True
 dt = 0.0
 
 # 0. Initialise - variables and resources
+shape_x = 0
 # Use pygame.font.SysFont(None, size) for a default system font,
 # or pygame.font.Font(file_path, size) for a custom font file (.ttf)
 font = pygame.font.SysFont(None, 48) # Default font, size 48
 BLACK = (0, 0, 0)
+CYAN = (0, 255, 255)
 # Load the background image (place "background.png" in the same directory as your script)
 # Use .convert() for optimization
 background_image = None
@@ -55,6 +57,7 @@ while running:
 
     # 2. Update game state (e.g., move a character)
     cycle_count += 1
+    shape_x += 10
     time.sleep(1) # We sleep 1 second just to make the loop slower for this task, don't re-use this in the future.
 
     # 3. Draw/Render
@@ -66,7 +69,8 @@ while running:
     else:
         # If image failed to load, keep the solid color
         pass
-    
+
+    pygame.draw.circle(screen, CYAN, (shape_x, 30), 25)
     draw_text(screen, f'Cycle count: {cycle_count}', 20, BLACK, 10, 10)
 
     # 4. Update the display
